@@ -33,7 +33,7 @@
       >
         <defs>
           <filter id="crack-glow">
-            <feGaussianBlur stdDeviation="0.5" result="coloredBlur" />
+            <feGaussianBlur stdDeviation="0.3" result="coloredBlur" />
             <feMerge>
               <feMergeNode in="coloredBlur" />
               <feMergeNode in="SourceGraphic" />
@@ -41,63 +41,80 @@
           </filter>
         </defs>
         <g
-          stroke="rgba(237,232,223,0.7)"
-          stroke-width="1"
+          stroke="rgba(237,232,223,0.6)"
+          stroke-width="0.8"
           fill="none"
           filter="url(#crack-glow)"
-          stroke-linecap="square"
+          stroke-linecap="round"
         >
-          <!-- Primary impact burst - sharp angular lines -->
-          <polyline points="720,450 680,280 650,120 640,40" />
-          <polyline points="720,450 760,280 800,110 820,10" />
-          <polyline points="720,450 820,420 950,380 1100,320" />
-          <polyline points="720,450 900,500 1080,580 1200,680" />
-          <polyline points="720,450 770,620 820,800 850,900" />
-          <polyline points="720,450 680,600 640,760 600,900" />
-          <polyline points="720,450 600,500 420,560 200,620" />
-          <polyline points="720,450 580,350 380,250 180,150" />
-          <polyline points="720,450 640,330 520,200 340,80" />
-          <polyline points="720,450 760,370 840,280 960,160" />
+          <!-- Main explosive fracture from impact point -->
+          <polyline points="720,450 705,310 698,180 695,60" />
+          <polyline points="720,450 738,305 762,140 780,15" />
+          <polyline points="720,450 835,405 975,355 1110,280" />
+          <polyline points="720,450 915,520 1085,605 1215,710" />
+          <polyline points="720,450 765,630 810,815 835,900" />
+          <polyline points="720,450 670,615 615,795 575,900" />
+          <polyline points="720,450 590,515 410,595 190,680" />
+          <polyline points="720,450 565,370 365,280 155,165" />
+          <polyline points="720,450 615,325 475,195 305,75" />
+          <polyline points="720,450 775,365 870,265 995,150" />
 
-          <!-- Secondary fracture lines with offshoots -->
-          <polyline points="650,120 620,95 580,70 540,50" />
-          <polyline points="650,120 680,140 700,170 710,210" />
-          <polyline points="800,110 830,85 870,55 910,20" />
-          <polyline points="800,110 780,145 760,190 740,240" />
-          <polyline points="1100,320 1250,280 1350,240 1400,200" />
-          <polyline points="1100,320 1090,370 1080,430 1070,500" />
-          <polyline points="1080,580 1150,620 1230,680 1300,760" />
-          <polyline points="1080,580 1020,560 940,540 860,520" />
-          <polyline points="850,900 880,850 920,780 970,700" />
-          <polyline points="850,900 800,870 750,820 680,750" />
-          <polyline points="600,900 560,850 500,760 420,650" />
-          <polyline points="600,900 640,860 700,790 780,690" />
-          <polyline points="200,620 140,580 80,540 20,480" />
-          <polyline points="200,620 240,660 300,730 380,820" />
-          <polyline points="180,150 140,180 100,230 60,300" />
-          <polyline points="180,150 220,110 280,60 360,10" />
-          <polyline points="340,80 300,110 240,160 160,240" />
-          <polyline points="340,80 380,50 440,20 520,0" />
-          <polyline points="960,160 1020,130 1100,90 1180,40" />
-          <polyline points="960,160 920,200 860,270 780,380" />
+          <!-- Secondary jagged branches -->
+          <polyline points="698,180 682,165 658,140 632,110" />
+          <polyline points="698,180 715,200 730,235 745,280" />
+          <polyline points="698,180 705,165 698,135 688,100" />
+          <polyline points="762,140 785,110 815,75 850,35" />
+          <polyline points="762,140 745,175 728,230 715,295" />
+          <polyline points="762,140 775,125 792,105 812,80" />
+          <polyline points="1110,280 1280,235 1380,200 1420,170" />
+          <polyline points="1110,280 1095,355 1080,450 1065,555" />
+          <polyline points="1110,280 1125,260 1145,235 1170,200" />
+          <polyline points="1085,605 1160,650 1250,710 1320,780" />
+          <polyline points="1085,605 1010,585 920,560 825,530" />
+          <polyline points="1085,605 1100,625 1125,655 1155,700" />
+          <polyline points="835,900 875,860 930,800 995,725" />
+          <polyline points="835,900 805,875 765,835 715,775" />
+          <polyline points="835,900 848,880 865,855 885,820" />
+          <polyline points="575,900 540,860 485,795 415,710" />
+          <polyline points="575,900 605,870 650,815 710,750" />
+          <polyline points="575,900 562,875 545,845 525,810" />
+          <polyline points="190,680 135,650 75,610 20,550" />
+          <polyline points="190,680 235,720 300,780 385,860" />
+          <polyline points="190,680 175,665 155,645 130,615" />
+          <polyline points="155,165 125,195 90,245 55,320" />
+          <polyline points="155,165 185,135 230,90 290,25" />
+          <polyline points="155,165 140,180 120,205 95,245" />
+          <polyline points="305,75 275,105 235,160 180,245" />
+          <polyline points="305,75 330,50 370,15 420,-5" />
+          <polyline points="305,75 295,95 280,125 260,170" />
+          <polyline points="995,150 1055,120 1130,75 1210,30" />
+          <polyline points="995,150 950,195 885,280 795,400" />
+          <polyline points="995,150 1010,135 1035,110 1070,75" />
 
-          <!-- Tertiary fine cracks -->
-          <line x1="680" y1="140" x2="710" y2="200" />
-          <line x1="700" y1="170" x2="730" y2="230" />
-          <line x1="780" y1="145" x2="810" y2="190" />
-          <line x1="1090" y1="370" x2="1110" y2="420" />
-          <line x1="1020" y1="560" x2="980" y2="590" />
-          <line x1="880" y1="850" x2="920" y2="810" />
-          <line x1="240" y1="660" x2="280" y2="710" />
-          <line x1="140" y1="180" x2="100" y2="240" />
-          <line x1="300" y1="110" x2="260" y2="150" />
-          <line x1="1020" y1="130" x2="1060" y2="100" />
+          <!-- Tertiary micro-fractures with irregular branching -->
+          <line x1="682" y1="165" x2="665" y2="185" />
+          <line x1="658" y1="140" x2="645" y2="165" />
+          <line x1="715" y1="200" x2="705" y2="230" />
+          <line x1="785" y1="110" x2="805" y2="90" />
+          <line x1="815" y1="75" x2="835" y2="50" />
+          <line x1="745" y1="175" x2="760" y2="210" />
+          <line x1="1095" y1="355" x2="1115" y2="390" />
+          <line x1="1080" y1="450" x2="1105" y2="495" />
+          <line x1="1160" y1="650" x2="1190" y2="690" />
+          <line x1="875" y1="860" x2="910" y2="825" />
+          <line x1="540" y1="860" x2="515" y2="830" />
+          <line x1="135" y1="650" x2="105" y2="680" />
+          <line x1="125" y1="195" x2="105" y2="225" />
+          <line x1="275" y1="105" x2="250" y2="135" />
+          <line x1="1055" y1="120" x2="1090" y2="95" />
 
-          <!-- Connecting segments for irregular shatter pattern -->
-          <polyline points="620,95 600,110 590,140" />
-          <polyline points="830,85 850,105 880,140" />
-          <polyline points="1250,280 1240,320 1220,360" />
-          <polyline points="1150,620 1120,640 1080,670" />
+          <!-- Fine connecting cracks -->
+          <polyline points="665,185 655,200 650,225" />
+          <polyline points="805,90 825,75 845,60" />
+          <polyline points="1115,390 1120,430 1125,475" />
+          <polyline points="1190,690 1200,730 1210,775" />
+          <polyline points="515,830 505,855 500,885" />
+          <polyline points="250,135 240,155 235,180" />
           <polyline points="560,850 540,880 500,900" />
           <polyline points="140,580 120,610 90,660" />
           <polyline points="140,180 160,160 200,130" />
