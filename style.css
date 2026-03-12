@@ -228,8 +228,10 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
   transition:color .3s;
 }
 .c-link:hover{color:var(--white)}
-.c-link span{opacity:.25;transition:opacity .3s,transform .3s;display:inline-block}
+.c-link span{opacity:.25;transition:opacity .3s,transform .3s;display:inline-block;color:transparent;font-size:0;position:relative;width:1.2em;height:1.2em}
+.c-link span::after{content:'';position:absolute;top:50%;right:0;width:6px;height:6px;border-top:1px solid rgba(237,232,223,.25);border-right:1px solid rgba(237,232,223,.25);transform:translate(-2px,-50%) rotate(45deg);transition:border-color .3s}
 .c-link:hover span{opacity:1;transform:translate(4px,-4px)}
+.c-link:hover span::after{border-color:var(--white)}
 
 /* FORM */
 .bform{display:flex;flex-direction:column}
