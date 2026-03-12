@@ -1,17 +1,3 @@
-/* ── CURSOR ── */
-const cur  = document.getElementById('cur');
-const curR = document.getElementById('cur-r');
-let mx = window.innerWidth/2, my = window.innerHeight/2;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX; my=e.clientY;
-  cur.style.left=mx+'px'; cur.style.top=my+'px';
-  curR.style.left=mx+'px'; curR.style.top=my+'px';
-});
-document.querySelectorAll('a,button,.mix,.date').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';curR.style.opacity='0'});
-  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';curR.style.opacity='1'});
-});
-
 /* ── RAIN SCENE── */
 (function(){
   var s=document.createElement('script');
