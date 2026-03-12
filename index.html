@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CURSEDSOUND</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="cur"></div>
+    <div id="cur-r"></div>
+
+    <!-- NAV -->
+    <nav>
+      <a href="#hero" class="logo">CURSEDSOUND</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#dates">Dates</a></li>
+        <li><a href="#music">Music</a></li>
+        <li><a href="#mixes">Mixes</a></li>
+        <li><a href="#contact">Booking</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+      <svg
+        id="crack-svg"
+        viewBox="0 0 1440 900"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <filter id="crack-glow">
+            <feGaussianBlur stdDeviation="0.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <g
+          stroke="rgba(237,232,223,0.7)"
+          stroke-width="1"
+          fill="none"
+          filter="url(#crack-glow)"
+          stroke-linecap="square"
+        >
+          <!-- Primary impact burst - sharp angular lines -->
+          <polyline points="720,450 680,280 650,120 640,40" />
+          <polyline points="720,450 760,280 800,110 820,10" />
+          <polyline points="720,450 820,420 950,380 1100,320" />
+          <polyline points="720,450 900,500 1080,580 1200,680" />
+          <polyline points="720,450 770,620 820,800 850,900" />
+          <polyline points="720,450 680,600 640,760 600,900" />
+          <polyline points="720,450 600,500 420,560 200,620" />
+          <polyline points="720,450 580,350 380,250 180,150" />
+          <polyline points="720,450 640,330 520,200 340,80" />
+          <polyline points="720,450 760,370 840,280 960,160" />
+
+          <!-- Secondary fracture lines with offshoots -->
+          <polyline points="650,120 620,95 580,70 540,50" />
+          <polyline points="650,120 680,140 700,170 710,210" />
+          <polyline points="800,110 830,85 870,55 910,20" />
+          <polyline points="800,110 780,145 760,190 740,240" />
+          <polyline points="1100,320 1250,280 1350,240 1400,200" />
+          <polyline points="1100,320 1090,370 1080,430 1070,500" />
+          <polyline points="1080,580 1150,620 1230,680 1300,760" />
+          <polyline points="1080,580 1020,560 940,540 860,520" />
+          <polyline points="850,900 880,850 920,780 970,700" />
+          <polyline points="850,900 800,870 750,820 680,750" />
+          <polyline points="600,900 560,850 500,760 420,650" />
+          <polyline points="600,900 640,860 700,790 780,690" />
+          <polyline points="200,620 140,580 80,540 20,480" />
+          <polyline points="200,620 240,660 300,730 380,820" />
+          <polyline points="180,150 140,180 100,230 60,300" />
+          <polyline points="180,150 220,110 280,60 360,10" />
+          <polyline points="340,80 300,110 240,160 160,240" />
+          <polyline points="340,80 380,50 440,20 520,0" />
+          <polyline points="960,160 1020,130 1100,90 1180,40" />
+          <polyline points="960,160 920,200 860,270 780,380" />
+
+          <!-- Tertiary fine cracks -->
+          <line x1="680" y1="140" x2="710" y2="200" />
+          <line x1="700" y1="170" x2="730" y2="230" />
+          <line x1="780" y1="145" x2="810" y2="190" />
+          <line x1="1090" y1="370" x2="1110" y2="420" />
+          <line x1="1020" y1="560" x2="980" y2="590" />
+          <line x1="880" y1="850" x2="920" y2="810" />
+          <line x1="240" y1="660" x2="280" y2="710" />
+          <line x1="140" y1="180" x2="100" y2="240" />
+          <line x1="300" y1="110" x2="260" y2="150" />
+          <line x1="1020" y1="130" x2="1060" y2="100" />
+
+          <!-- Connecting segments for irregular shatter pattern -->
+          <polyline points="620,95 600,110 590,140" />
+          <polyline points="830,85 850,105 880,140" />
+          <polyline points="1250,280 1240,320 1220,360" />
+          <polyline points="1150,620 1120,640 1080,670" />
+          <polyline points="560,850 540,880 500,900" />
+          <polyline points="140,580 120,610 90,660" />
+          <polyline points="140,180 160,160 200,130" />
+          <polyline points="220,110 200,90 160,50" />
+        </g>
+
+        <!-- Brighter overlay cracks for top layer effect -->
+        <g stroke="rgba(237,232,223,0.4)" stroke-width="0.8" fill="none">
+          <line x1="720" y1="450" x2="680" y2="280" />
+          <line x1="720" y1="450" x2="760" y2="280" />
+          <line x1="720" y1="450" x2="820" y2="420" />
+          <line x1="720" y1="450" x2="770" y2="620" />
+          <line x1="720" y1="450" x2="600" y2="500" />
+        </g>
+      </svg>
+      <div id="hero-3d"></div>
+      <div class="hero-text">
+        <h1 class="hero-name">CURSEDSOUND</h1>
+        <p class="hero-sub">
+          Music Production &mdash; Sound Design &mdash; DJing
+        </p>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <p class="s-label">About</p>
+      <div class="inner">
+        <div>
+          <p class="bio">
+            <strong>CURSEDSOUND</strong> was not chosen — it was assigned. A
+            name born from a streak of bad luck too long and too specific to be
+            coincidence. The music reflects this: hypnotic grooves that spiral
+            inward, psychedelic layers that disorient, textures that
+            feel like something gone wrong in the best possible way.
+            <br /><br />
+            The curse became the craft. Rooted in the underground, unrepeatable
+            in the club.
+          </p>
+          <div class="curse-badge">✦ &nbsp; Under permanent curse &nbsp; ✦</div>
+        </div>
+        <div class="about-table">
+          <div class="a-row">
+            <span class="a-key">Based in</span
+            ><span class="a-val">Karlsruhe, DE</span>
+          </div>
+          <div class="a-row">
+            <span class="a-key">Genre</span
+            ><span class="a-val">Psychedelic & Dark Electronic Music</span>
+          </div>
+          <div class="a-row">
+            <span class="a-key">BPM range</span
+            ><span class="a-val">128 — 145</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dates -->
+    <section class="section" id="dates">
+      <p class="s-label">Dates</p>
+      <div class="date-list">
+        <div class="date">
+          <div class="date-date">26 APRIL<br />2026</div>
+          <div>
+            <div class="date-venue">TBA</div>
+            <div class="date-city">Mannheim, DE</div>
+          </div>
+          <span class="date-status">TBA</span>
+        </div>
+        <div class="date">
+          <div class="date-date">7 MAY<br />2027</div>
+          <div>
+            <div class="date-venue">TBA</div>
+            <div class="date-city">Karlsruhe, DE</div>
+          </div>
+          <span class="date-status">TBA</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MUSIC & MIXES CONTAINER -->
+    <div class="music-mixes-container">
+      <!-- MUSIC -->
+      <section class="section" id="music">
+        <p class="s-label">Recent Music</p>
+        <div class="music-list">
+          <div class="music">
+            <div class="play-btn">▶</div>
+            <a
+              href="https://open.spotify.com/intl-de/track/40hVdoQpTXlSn43osTHIZ5?si=8925da3379704296"
+              target="_blank"
+              class="music-link"
+            >
+              <div class="music-name">Drei03 (Cursedsound Remix)</div>
+              <div class="music-meta">TOOLBOX</div>
+            </a>
+          </div>
+          <div class="music">
+            <div class="play-btn">▶</div>
+            <a
+              href="https://open.spotify.com/album/6r0IGzjCjF7tZEGKZZ2F8Z?si=t6baRNf7R9KQhopGZh4e6A"
+              target="_blank"
+              class="music-link"
+            >
+              <div class="music-name">Rising Tides</div>
+              <div class="music-meta">CURSEDSOUND</div>
+            </a>
+          </div>
+          <div class="music">
+            <div class="play-btn">▶</div>
+            <a
+              href="https://open.spotify.com/album/6hQxFRdRmUwQGzcuHeNB1K?si=PALLV9XERRuvGJFZ_NXGOQ"
+              target="_blank"
+              class="music-link"
+            >
+              <div class="music-name">Control</div>
+              <div class="music-meta">CURSEDSOUND</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="music">
+            <div class="play-btn">▶</div>
+            <a
+              href="https://open.spotify.com/album/3MuG92SN0u6HVd7Tzdspjs?si=2yYPr5SKSXu9hfYSSovY0w"
+              target="_blank"
+              class="music-link"
+            >
+              <div class="music-name">Erdbeermund (Cursedsound Remix)</div>
+              <div class="music-meta">TOOLBOX</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- MIXES -->
+      <section class="section" id="mixes">
+      <p class="s-label">Recent Mixes</p>
+      <div class="mix-list">
+        <a href="https://www.youtube.com/watch?v=EiygPzlZ7hg&t=1816s" target="_blank" class="mix">
+          <div class="play-btn">▶</div>
+          <div>
+            <div class="mix-name">Dunkelrot Showcase</div>
+            <div class="mix-meta">YouTube</div>
+          </div>
+          <div class="mix-dur">1:00:00</div>
+        </a>
+        <a href="https://www.youtube.com/watch?v=1fuEVIOyO-g&t=3597s" target="_blank" class="mix">
+          <div class="play-btn">▶</div>
+          <div>
+            <div class="mix-name">GPN22</div>
+            <div class="mix-meta">YouTube</div>
+          </div>
+          <div class="mix-dur">1:30:00</div>
+        </a>
+        <a href="https://soundcloud.com/cursedsound/hypnotic-and-groovy-techno-set?si=b9f894b557834527bf73a27cde949d08" target="_blank" class="mix">
+          <div class="play-btn">▶</div>
+          <div>
+            <div class="mix-name">Hypnotic and Groovy Techno Mix</div>
+            <div class="mix-meta">Soundcloud</div>
+          </div>
+          <div class="mix-dur">0:45:00</div>
+        </a>
+        <a href="https://soundcloud.com/cursedsound/karl-kinsky-at-culteum-karlsruhe-techno-set-live-recording-221223?si=954abdf59e5640a7a6f3db89d9558efc" target="_blank" class="mix">
+          <div class="play-btn">▶</div>
+          <div>
+            <div class="mix-name">Karl Kinsky at Culteum Karlsruhe</div>
+            <div class="mix-meta">Soundcloud</div>
+          </div>
+          <div class="mix-dur">1:00:00</div>
+        </a>
+      </div>
+    </section>
+    </div>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <p class="s-label">Booking</p>
+      <div class="inner">
+        <div>
+          <p class="contact-blurb">
+            <strong>Get in touch.</strong><br />
+            For bookings, collaborations, and label enquiries. All handled
+            personally — response within 48 hours. Or longer. The curse has its
+            own schedule.
+          </p>
+          <div class="c-links">
+            <a class="c-link" href="mailto:booking@cursedsound.com"
+              >booking@cursedsound.com <span>↗</span></a
+            >
+            <a class="c-link" href="https://www.instagram.com/cursedsound"
+              >Instagram <span>↗</span></a
+            >
+            <a
+              class="c-link"
+              href="https://open.spotify.com/intl-de/artist/7eCU2d1x8AarSiR1IyA69K?si=osEAOvn2Soixngp8DqYxMw"
+              >Spotify <span>↗</span></a
+            >
+            <a class="c-link" href="https://www.soundcloud.com/cursedsound"
+              >Soundcloud <span>↗</span></a
+            >
+            <a class="c-link" href="https://www.bandcamp.com/cursedsound"
+              >Bandcamp <span>↗</span></a
+            >
+            <a
+              class="c-link"
+              href="https://www.residentadvisor.net/dj/cursedsound"
+              >Resident Advisor <span>↗</span></a
+            >
+          </div>
+        </div>
+        <!-- TODO: Contact form
+      <form class="bform" onsubmit="return false">
+        <div class="f-row">
+          <input class="f" type="text" placeholder="Name">
+          <input class="f" type="email" placeholder="Email">
+        </div>
+        <textarea class="f" rows="4" placeholder="Message"></textarea>
+        <button class="submit">Send</button>
+      </form>
+      --></div>
+    </section>
+
+    <footer>
+      <span class="f-brand">CURSEDSOUND</span>
+      <span class="f-copy">© 2026 — the curse continues</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
