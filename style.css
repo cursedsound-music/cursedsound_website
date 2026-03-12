@@ -166,7 +166,7 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
   display:grid;grid-template-columns:2.6rem 1fr auto;
   align-items:center;gap:2.5rem;
   padding:1.9rem 0;border-bottom:1px solid var(--dim);
-  cursor:none;transition:padding-left .35s;position:relative;
+  cursor:pointer;transition:padding-left .35s;position:relative;
 }
 .music::after{content:'';position:absolute;left:0;top:50%;width:0;height:1px;background:var(--red);transform:translateY(-50%);transition:width .35s}
 .music:hover{padding-left:1.6rem}
@@ -186,7 +186,7 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
   display:grid;grid-template-columns:2.6rem 1fr auto;
   align-items:center;gap:2.5rem;
   padding:1.9rem 0;border-bottom:1px solid var(--dim);
-  cursor:none;transition:padding-left .35s;position:relative;
+  cursor:pointer;transition:padding-left .35s;position:relative;
   text-decoration:none;color:inherit;
 }
 .mix::after{content:'';position:absolute;left:0;top:50%;width:0;height:1px;background:var(--red);transform:translateY(-50%);transition:width .35s}
@@ -248,7 +248,7 @@ textarea.f{resize:none}
   border:1px solid rgba(237,232,223,.14);color:rgba(237,232,223,.3);
   font-family:'Unbounded',sans-serif;font-size:.52rem;
   letter-spacing:.5em;text-transform:uppercase;
-  padding:1.1rem 2.5rem;cursor:none;transition:all .3s;
+  padding:1.1rem 2.5rem;cursor:pointer;transition:all .3s;
 }
 .submit:hover{border-color:var(--red);background:var(--red);color:var(--white)}
 
