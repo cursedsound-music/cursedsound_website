@@ -52,6 +52,39 @@ nav{
   color:rgba(237,232,223,.3);text-decoration:none;transition:color .3s;
 }
 .nav-links a:hover{color:var(--white)}
+.nav-toggle {
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:.5rem;
+  margin-left:auto;
+  z-index:301;
+}
+.nav-toggle .hamburger {
+  width:2rem;
+  height:.22rem;
+  background:var(--white);
+  display:block;
+  position:relative;
+  border-radius:.12rem;
+}
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+  content:'';
+  position:absolute;
+  left:0;
+  width:2rem;
+  height:.22rem;
+  background:var(--white);
+  border-radius:.12rem;
+}
+.nav-toggle .hamburger::before {
+  top:-.5rem;
+}
+.nav-toggle .hamburger::after {
+  top:.5rem;
+}
 
 /* ── HERO ── */
 #hero{
@@ -266,8 +299,29 @@ footer{
 @media(max-width:768px){
   nav{padding:1.5rem}
   .logo{font-size:.5rem;letter-spacing:.2em}
-  .nav-links{gap:1rem}
-  .nav-links a{font-size:.42rem;letter-spacing:.15em}
+  .nav-toggle{display:block}
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--black);
+    flex-direction:column;
+    gap:0;
+    padding:1rem 0;
+    display:none;
+    text-align:center;
+  }
+  .nav-links.open{
+    display:flex;
+  }
+  .nav-links a{
+    font-size:.42rem;
+    letter-spacing:.15em;
+    padding:1rem 0;
+    border-bottom:1px solid var(--dim2);
+  }
+  .nav-links a:last-child{border-bottom:none}
   .hero-name{font-size:clamp(2rem,5.5vw,4rem)}
   #hero{padding:0 1.5rem 3.5rem}
   .section{padding:4.5rem 1.5rem}

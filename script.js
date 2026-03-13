@@ -1,3 +1,19 @@
+// ── NAV HAMBURGER ──
+document.addEventListener('DOMContentLoaded',function(){
+  var navToggle=document.querySelector('.nav-toggle');
+  var navLinks=document.querySelector('.nav-links');
+  if(navToggle && navLinks){
+    navToggle.addEventListener('click',function(){
+      navLinks.classList.toggle('open');
+    });
+    // Close menu on link click (mobile UX)
+    navLinks.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click',function(){
+        navLinks.classList.remove('open');
+      });
+    });
+  }
+});
 /* ── RAIN SCENE── */
 (function(){
   var s=document.createElement('script');
