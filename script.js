@@ -1,4 +1,4 @@
-// ── NAV HAMBURGER ──
+// ── NAV HAMBURGER + SMOOTH SCROLL ──
 document.addEventListener('DOMContentLoaded',function(){
   var navToggle=document.querySelector('.nav-toggle');
   var navLinks=document.querySelector('.nav-links');
@@ -6,220 +6,322 @@ document.addEventListener('DOMContentLoaded',function(){
     navToggle.addEventListener('click',function(){
       navLinks.classList.toggle('open');
     });
-    // Close menu on link click (mobile UX)
+    // Close menu on link click + smooth scroll
     navLinks.querySelectorAll('a').forEach(function(link){
-      link.addEventListener('click',function(){
+      link.addEventListener('click',function(e){
         navLinks.classList.remove('open');
+        var href=link.getAttribute('href');
+        if(href&&href.startsWith('#')){
+          e.preventDefault();
+          var target=document.querySelector(href);
+          if(target){
+            target.scrollIntoView({behavior:'smooth'});
+          }
+        }
       });
     });
   }
+  // Logo smooth scroll
+  var logo=document.querySelector('.logo');
+  if(logo){
+    logo.addEventListener('click',function(e){
+      var href=logo.getAttribute('href');
+      if(href&&href.startsWith('#')){
+        e.preventDefault();
+        var target=document.querySelector(href);
+        if(target){
+          target.scrollIntoView({behavior:'smooth'});
+        }
+      }
+    });
+  }
 });
-/* ── RAIN SCENE── */
+
+/* ── INTERACTIVE FRACTAL SPHERE ── */
 (function(){
-  var s=document.createElement('script');
-  s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-  s.onload=initScene;
-  document.head.appendChild(s);
-})();
-
-function initScene(){
   var container=document.getElementById('hero-3d');
-  var W=function(){return container.offsetWidth;};
-  var H=function(){return container.offsetHeight;};
+  if(!container) return;
 
-  var renderer=new THREE.WebGLRenderer({antialias:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  renderer.setSize(W(),H());
-  renderer.shadowMap.enabled=true;
-  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.0;
-  container.appendChild(renderer.domElement);
+  var canvas=document.createElement('canvas');
+  canvas.style.display='block';
+  container.appendChild(canvas);
 
-  var scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x050505);
+  var gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
+  if(!gl){console.warn('WebGL not supported');return;}
 
-  /* Camera */
-  var camera=new THREE.PerspectiveCamera(50,W()/H(),0.1,100);
+  var mouse={x:0.5,y:0.5,targetX:0.5,targetY:0.5};
 
+  /* Shaders */
+  var vertSrc=`
+    attribute vec2 a_position;
+    void main(){gl_Position=vec4(a_position,0.0,1.0);}
+  `;
 
-  /* Floor */
-  var floor=new THREE.Mesh(
-    new THREE.PlaneGeometry(1000,1000),
-    new THREE.MeshStandardMaterial({color:0x050505,roughness:1})
-  );
-  floor.rotation.x=-Math.PI/2;
-  floor.receiveShadow=true;
-  scene.add(floor);
+  var fragSrc=`
+    precision highp float;
+    uniform vec2 u_resolution;
+    uniform float u_time;
+    uniform vec2 u_mouse;
 
-  /* Collision box */
-  var collisionBox=new THREE.Mesh(
-    new THREE.BoxGeometry(30,1,15),
-    new THREE.MeshStandardMaterial({color:0x333333})
-  );
-  collisionBox.position.y=12;
-  collisionBox.scale.x=3.5;
-  collisionBox.scale.z=3.33;
-  collisionBox.castShadow=true;
-  scene.add(collisionBox);
+    #define PI 3.14159265
+    
+    // Rotation matrix
+    mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,s,-s,c);}
+    
+    // Noise
+    float hash(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}
+    float noise(vec3 p){
+      vec3 i=floor(p),f=fract(p);
+      f=f*f*(3.0-2.0*f);
+      return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),
+                     mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
+                 mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),
+                     mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);
+    }
 
-  /* ── BLACK CAT ── */
-  function makeCat(){
-    var g=new THREE.Group();
-    var bm=new THREE.MeshStandardMaterial({color:0x080808,roughness:1,metalness:0});
-    var em=new THREE.MeshStandardMaterial({color:0xff0000,emissive:0xff0000,emissiveIntensity:20,roughness:0});
+    vec3 np;
+    float tt,morph;
+    
+    // The orb
+    float map(vec3 p){
+      // Base sphere
+      float sphere=length(p)-2.2;
+      
+      // Store original for effects
+      np=p;
+      
+      // Breathing animation
+      float breath=0.5+0.5*sin(tt*0.8);
+      
+      // Recursive fold/mirror for organic detail (evvvvil style)
+      for(int i=0;i<5;i++){
+        // Abs symmetry creates crystalline patterns
+        np=abs(np)-mix(vec3(0.8,0.6,0.4),vec3(0.5,0.9,0.7),morph)*0.5;
+        // Rotate to create organic flow
+        np.xy*=rot(0.785*float(i)*0.5+tt*0.1);
+        np.yz*=rot(0.523*float(i)+tt*0.05);
+        // Pull apart for depth
+        np-=0.15*sin(p.y*2.0+tt);
+      }
+      
+      // Inner recursive structure
+      float inner=length(np)-0.3-0.1*breath;
+      
+      // Combine: sphere shell with inner detail punched through
+      float d=max(sphere,-inner*0.5);
+      
+      // Surface displacement
+      float disp=noise(p*3.0+tt*0.2)*0.15*(0.5+0.5*morph);
+      d+=disp;
+      
+      // Organic veins on surface
+      float veins=abs(sin(np.x*8.0)*sin(np.y*8.0)*sin(np.z*8.0));
+      d-=veins*0.02*breath;
+      
+      return d*0.7;
+    }
 
-    /* body */
-    var body=new THREE.Mesh(new THREE.SphereGeometry(2.0,32,24),bm);
-    body.scale.set(1.5,1.0,1.0); body.castShadow=true; g.add(body);
-    /* neck */
-    var neck=new THREE.Mesh(new THREE.CylinderGeometry(0.75,1.0,1.1,16),bm);
-    neck.position.set(2.2,0.9,0); neck.rotation.z=-0.35; neck.castShadow=true; g.add(neck);
-    /* head */
-    var head=new THREE.Mesh(new THREE.SphereGeometry(1.35,32,24),bm);
-    head.position.set(3.1,1.6,0); head.castShadow=true; g.add(head);
-    /* ears */
-    [-1,1].forEach(function(s){
-      var ear=new THREE.Mesh(new THREE.ConeGeometry(0.42,0.9,4),bm);
-      ear.position.set(3.5,2.75,s*0.68); ear.rotation.z=s*0.3; ear.castShadow=true; g.add(ear);
-    });
-    /* snout */
-    var snout=new THREE.Mesh(new THREE.SphereGeometry(0.42,16,12),bm);
-    snout.scale.set(1,0.65,0.75); snout.position.set(4.3,1.35,0); g.add(snout);
-    /* eyes — glowing red */
-    [-0.52,0.52].forEach(function(s){
-      var eyeMat=new THREE.MeshBasicMaterial({color:0xff0000});
-      var eye=new THREE.Mesh(new THREE.SphereGeometry(0.28,16,16),eyeMat);
-      eye.position.set(4.15,1.75,s); g.add(eye);
-      var el=new THREE.PointLight(0xff0000,5,12);
-      el.position.copy(eye.position); g.add(el);
-    });
-    /* tail */
-    var tail=new THREE.Mesh(new THREE.TubeGeometry(
-      new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-2.4,-0.8,0),
-        new THREE.Vector3(-3.8,0.5,0),
-        new THREE.Vector3(-4.2,2.4,0),
-        new THREE.Vector3(-3.0,4.0,0)
-      ]),24,0.26,8),bm);
-    tail.castShadow=true; g.add(tail);
-    /* legs */
-    [[-1.1,-1.8,-0.7],[-1.1,-1.8,0.7],[0.9,-1.8,-0.7],[0.9,-1.8,0.7]].forEach(function(p){
-      var leg=new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.22,1.6,10),bm);
-      leg.position.set(p[0],p[1],p[2]); leg.castShadow=true; g.add(leg);
-    });
-    return g;
+    vec3 calcNormal(vec3 p){
+      vec2 e=vec2(0.001,0.0);
+      return normalize(vec3(
+        map(p+e.xyy)-map(p-e.xyy),
+        map(p+e.yxy)-map(p-e.yxy),
+        map(p+e.yyx)-map(p-e.yyx)
+      ));
+    }
+
+    vec2 trace(vec3 ro,vec3 rd){
+      float t=0.1;
+      for(int i=0;i<100;i++){
+        float d=map(ro+rd*t);
+        if(abs(d)<0.0005||t>30.0)break;
+        t+=d;
+      }
+      return vec2(t,t<30.0?1.0:0.0);
+    }
+
+    void main(){
+      vec2 uv=(gl_FragCoord.xy-0.5*u_resolution.xy)/u_resolution.y;
+      
+      tt=mod(u_time,100.0);
+      morph=0.5+0.5*sin(tt*0.5);
+      
+      // Camera with mouse orbit + auto rotation
+      float autoRot=tt*0.15;
+      float camX=(u_mouse.x-0.5)*PI+autoRot;
+      float camY=(u_mouse.y-0.5)*0.8;
+      
+      // Adjust camera distance based on aspect ratio
+      float aspect=u_resolution.x/u_resolution.y;
+      float camDist=6.0+max(0.0,(1.0-aspect)*4.0)+sin(tt*0.3)*0.5;
+      
+      vec3 ro=vec3(sin(camX)*cos(camY),sin(camY)+0.5,cos(camX)*cos(camY))*camDist;
+      vec3 ta=vec3(0.0);
+      vec3 cw=normalize(ta-ro);
+      vec3 cu=normalize(cross(cw,vec3(0,1,0)));
+      vec3 cv=cross(cu,cw);
+      vec3 rd=normalize(uv.x*cu+uv.y*cv+1.8*cw);
+      
+      // Background
+      vec3 bgCol=vec3(0.0);
+      vec3 col=bgCol;
+      
+      vec2 hit=trace(ro,rd);
+      
+      if(hit.y>0.0){
+        vec3 pos=ro+rd*hit.x;
+        vec3 nor=calcNormal(pos);
+        vec3 ld=normalize(vec3(0.5,0.8,-0.3));
+        
+        // Base albedo
+        vec3 albedo=vec3(0.12,0.0,0.0);
+        
+        // Add detail coloring
+        nor*=1.0+0.4*ceil(sin(np*3.0));
+        nor=normalize(nor);
+        
+        // Diffuse
+        float dif=max(0.0,dot(nor,ld));
+        dif=pow(dif,1.5);
+        
+        // Ambient occlusion
+        float ao=1.0-smoothstep(0.0,1.5,hit.x)*0.5;
+        
+        // Specular with glossy variation
+        float gloss=8.0+20.0*noise(np*0.5);
+        float spec=pow(max(0.0,dot(reflect(-ld,nor),-rd)),gloss);
+        
+        // Fresnel rim
+        float fresnel=pow(max(0.0,1.0+dot(nor,rd)),5.0);
+        
+        // Colors
+        col=albedo*(0.05+0.95*dif*ao);
+        col+=vec3(0.35,0.0,0.0)*spec*0.25;
+        col=mix(col,vec3(0.18,0.0,0.0),fresnel*0.25);
+        
+        // Inner glow pulse
+        float pulse=0.5+0.5*sin(tt*1.2);
+        col+=vec3(0.08,0.0,0.0)*fresnel*pulse*0.15;
+      }
+      
+      // Vignette
+      vec2 vUv=gl_FragCoord.xy/u_resolution.xy;
+      col*=1.0-0.2*length(vUv-0.5);
+      
+      // Tone mapping
+      col=pow(col,vec3(0.45));
+      
+      gl_FragColor=vec4(col,1.0);
+    }
+  `;
+
+  function createShader(type,src){
+    var s=gl.createShader(type);
+    gl.shaderSource(s,src);
+    gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){
+      console.error(gl.getShaderInfoLog(s));
+      gl.deleteShader(s);
+      return null;
+    }
+    return s;
   }
 
-  var cat=makeCat();
-  cat.scale.setScalar(1);
-  cat.rotation.y=Math.PI;
-  cat.position.y=2.5;
-  scene.add(cat);
+  var vert=createShader(gl.VERTEX_SHADER,vertSrc);
+  var frag=createShader(gl.FRAGMENT_SHADER,fragSrc);
+  if(!vert||!frag)return;
 
-  /* ── RAIN ── */
-  var ACTIVE=25000;
-  var dropPos=new Float32Array(ACTIVE*3);
-  var dropVel=new Float32Array(ACTIVE);
-
-  function initDrop(i,fromTop){
-    dropPos[i*3]  =(Math.random()-0.5)*100;
-    dropPos[i*3+1]=fromTop?25+Math.random()*25:15+Math.random()*10;
-    dropPos[i*3+2]=(Math.random()-0.5)*100;
-    dropVel[i]=-(0.2+Math.random()*0.04);
+  var prog=gl.createProgram();
+  gl.attachShader(prog,vert);
+  gl.attachShader(prog,frag);
+  gl.linkProgram(prog);
+  if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){
+    console.error(gl.getProgramInfoLog(prog));
+    return;
   }
-  for(var i=0;i<ACTIVE;i++) initDrop(i,true);
+  gl.useProgram(prog);
 
-  var rainGeo=new THREE.BufferGeometry();
-  var rainArr=new Float32Array(ACTIVE*3);
-  rainGeo.setAttribute('position',new THREE.BufferAttribute(rainArr,3));
-  scene.add(new THREE.Points(rainGeo,
-    new THREE.PointsMaterial({color:0x8899bb,size:0.01,sizeAttenuation:true,
-      transparent:true,opacity:0.35,depthWrite:false})));
+  /* Fullscreen quad */
+  var posLoc=gl.getAttribLocation(prog,'a_position');
+  var buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(posLoc);
+  gl.vertexAttribPointer(posLoc,2,gl.FLOAT,false,0,0);
 
-  /* Ripple rings */
-  var RIPP=400; var ripples=[]; var rIdx=0;
-  var ringBaseGeo=new THREE.RingGeometry(0.05,0.8,24);
-  ringBaseGeo.rotateX(-Math.PI/2);
-  for(var ri=0;ri<RIPP;ri++){
-    var m=new THREE.MeshBasicMaterial({color:0x8899bb,transparent:true,opacity:0,
-      side:THREE.DoubleSide,depthWrite:false});
-    var r=new THREE.Mesh(ringBaseGeo.clone(),m);
-    r.position.set(9999,0,9999);
-    r.userData={life:0,active:false};
-    scene.add(r); ripples.push(r);
+  /* Uniforms */
+  var uRes=gl.getUniformLocation(prog,'u_resolution');
+  var uTime=gl.getUniformLocation(prog,'u_time');
+  var uMouse=gl.getUniformLocation(prog,'u_mouse');
+
+  function resize(){
+    var dpr=Math.min(devicePixelRatio,2);
+    var w=container.offsetWidth;
+    var h=container.offsetHeight;
+    canvas.width=w*dpr;
+    canvas.height=h*dpr;
+    canvas.style.width=w+'px';
+    canvas.style.height=h+'px';
+    gl.viewport(0,0,canvas.width,canvas.height);
   }
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
 
-  function spawnRipple(x,y,z){
-    var r=ripples[rIdx++%RIPP];
-    r.position.set(x,y+0.05,z);
-    r.scale.set(0.1,0.1,0.1);
-    r.material.opacity=0.6;
-    r.userData={life:1.0,active:true};
-  }
-
-  /* Bounding box for cat collision */
-  var catBB=new THREE.Box3().setFromObject(cat);
-
-  window.addEventListener('resize',function(){
-    renderer.setSize(W(),H());
-    camera.aspect=W()/H();
-    camera.updateProjectionMatrix();
+  /* Mouse interaction */
+  document.addEventListener('mousemove',function(e){
+    var rect=container.getBoundingClientRect();
+    var inBounds=e.clientX>=rect.left&&e.clientX<=rect.right&&
+                 e.clientY>=rect.top&&e.clientY<=rect.bottom;
+    if(inBounds){
+      mouse.targetX=((e.clientX-rect.left)/rect.width);
+      mouse.targetY=1.0-((e.clientY-rect.top)/rect.height);
+    }else{
+      mouse.targetX=0.5;
+      mouse.targetY=0.5;
+    }
   },{passive:true});
 
-  var last=0;
-  function animate(ms){
-    requestAnimationFrame(animate);
-    var dt=Math.min((ms-last)/1000,0.05); last=ms;
-    var t=ms/1000;
-
-    catBB.setFromObject(cat);
-
-    /* Camera moves slowly left and right */
-    camera.position.set(
-      -40,
-      10,
-      Math.sin(t*0.15)*15
-    );
-    camera.lookAt(0,6,0);
-
-    /* Rain */
-    for(var i=0;i<ACTIVE;i++){
-      dropPos[i*3+1]+=dropVel[i];
-      var px=dropPos[i*3],py=dropPos[i*3+1],pz=dropPos[i*3+2];
-      var hitFloor=py<0.05;
-      var hitCat=py>catBB.min.y&&py<catBB.max.y+0.5
-               &&px>catBB.min.x&&px<catBB.max.x
-               &&pz>catBB.min.z&&pz<catBB.max.z;
-      /* Collision with solid box above cat */
-      var cbTop=collisionBox.position.y+0.5;
-      var cbBot=collisionBox.position.y-0.5;
-      var cbL=collisionBox.position.x-collisionBox.scale.x*15;
-      var cbR=collisionBox.position.x+collisionBox.scale.x*15;
-      var cbF=collisionBox.position.z+collisionBox.scale.z*7.5;
-      var cbB=collisionBox.position.z-collisionBox.scale.z*7.5;
-      var hitBox=py>cbBot&&py<cbTop&&px>cbL&&px<cbR&&pz>cbB&&pz<cbF;
-      if(hitFloor||hitCat||hitBox){
-        if(Math.random()>0.4) spawnRipple(px,hitFloor?0:py,pz);
-        initDrop(i,false);
+  /* Touch support */
+  document.addEventListener('touchmove',function(e){
+    if(e.touches.length>0){
+      var rect=container.getBoundingClientRect();
+      var touch=e.touches[0];
+      var inBounds=touch.clientX>=rect.left&&touch.clientX<=rect.right&&
+                   touch.clientY>=rect.top&&touch.clientY<=rect.bottom;
+      if(inBounds){
+        mouse.targetX=((touch.clientX-rect.left)/rect.width);
+        mouse.targetY=1.0-((touch.clientY-rect.top)/rect.height);
       }
-      rainArr[i*3]=dropPos[i*3];
-      rainArr[i*3+1]=dropPos[i*3+1];
-      rainArr[i*3+2]=dropPos[i*3+2];
     }
-    rainGeo.attributes.position.needsUpdate=true;
+  },{passive:true});
 
-    /* Ripples */
-    ripples.forEach(function(r){
-      if(!r.userData.active) return;
-      r.userData.life-=dt*0.9;
-      if(r.userData.life<=0){r.userData.active=false;r.position.set(9999,0,9999);return;}
-      var s=0.1+(1-r.userData.life)*4.5;
-      r.scale.set(s,s,s);
-      r.material.opacity=r.userData.life*0.4;
-    });
+  document.addEventListener('touchend',function(){
+    mouse.targetX=0.5;
+    mouse.targetY=0.5;
+  },{passive:true});
 
-    renderer.render(scene,camera);
+  /* Animation loop */
+  var start=performance.now();
+  var isVisible=true;
+  
+  var observer=new IntersectionObserver(function(entries){
+    isVisible=entries[0].isIntersecting;
+  },{threshold:0});
+  observer.observe(container);
+  
+  function render(){
+    requestAnimationFrame(render);
+    if(!isVisible)return;
+    
+    // Smooth mouse interpolation
+    mouse.x+=(mouse.targetX-mouse.x)*0.05;
+    mouse.y+=(mouse.targetY-mouse.y)*0.05;
+    
+    var t=(performance.now()-start)/1000;
+    gl.uniform2f(uRes,canvas.width,canvas.height);
+    gl.uniform1f(uTime,t);
+    gl.uniform2f(uMouse,mouse.x,mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
   }
-  requestAnimationFrame(animate);
-}
+  render();
+})();

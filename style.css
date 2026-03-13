@@ -10,22 +10,11 @@
   --dim2:rgba(237,232,223,0.12);
 }
 
-html{scroll-behavior:smooth}
-
 body{
   background:var(--black);
   color:var(--white);
   font-family:'Unbounded',sans-serif;
   overflow-x:hidden;
-}
-
-/* ── CRACK OVERLAY ── */
-#crack-svg{
-  position:absolute;inset:0;pointer-events:none;z-index:200;width:100%;height:100%;
-  opacity:0;animation:crack-appear 3s ease 1.2s forwards;
-}
-@keyframes crack-appear{
-  0%{opacity:0} 30%{opacity:.25} 60%{opacity:.12} 100%{opacity:.18}
 }
 
 /* ── GRAIN ── */
@@ -91,6 +80,7 @@ nav{
   height:100vh;display:flex;flex-direction:column;
   justify-content:flex-end;padding:0 3rem 4.5rem;
   position:relative;overflow:hidden;
+  isolation:isolate;z-index:200;
 }
 
 /* THREE.JS HERO */
