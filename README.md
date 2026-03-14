@@ -1,6 +1,6 @@
 # CURSEDSOUND
 
-A dark, atmospheric website for CURSEDSOUND featuring an interactive 3D rain scene with a black cat and a broken glass overlay.
+A dark, atmospheric website for CURSEDSOUND
 
 ## Project Structure
 

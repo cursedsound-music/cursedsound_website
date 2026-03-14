@@ -284,10 +284,13 @@ footer{
 }
 .f-brand{font-family:'Unbounded',sans-serif;font-size:.52rem;letter-spacing:.38em;color:rgba(237,232,223,.12)}
 .f-copy{font-family:'Unbounded',sans-serif;font-style:normal;font-size:.7rem;color:rgba(237,232,223,.1)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;width:100%}
+.footer-links{display:flex;gap:2rem;font-size:0.65rem;letter-spacing:0.15em}
+.footer-links a{color:rgba(237,232,223,0.6);text-decoration:none}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
-  nav{padding:1.5rem}
+  nav{padding:1.5rem;background:var(--black)}
   .logo{font-size:.5rem;letter-spacing:.2em}
   .nav-toggle{display:block}
   .nav-links{
@@ -298,7 +301,7 @@ footer{
     background:var(--black);
     flex-direction:column;
     gap:0;
-    padding:1rem 0;
+    padding:0;
     display:none;
     text-align:center;
   }
@@ -322,5 +325,7 @@ footer{
   .date-status{display:none}
   .f-row{grid-template-columns:1fr;gap:0}
   footer{flex-direction:column;gap:.8rem;padding:2rem 1.5rem}
+  .footer-inner{flex-direction:column;align-items:flex-start;gap:1rem}
+  .footer-links{flex-direction:column;gap:0.8rem}
   .thirteen{font-size:60vw}
 }
