@@ -133,6 +133,16 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
 /* ── SECTIONS ── */
 .section{padding:6.5rem 3rem;border-top:1px solid var(--dim)}
 
+.about-booking-grid{display:grid;grid-template-columns:1fr}
+
+@media(min-width:1100px){
+  .about-booking-grid{grid-template-columns:1fr 1fr}
+  .about-booking-grid .section{padding-left:3rem;padding-right:3rem}
+  .about-booking-grid #contact{border-left:1px solid var(--dim)}
+  .about-booking-grid #about .inner,
+  .about-booking-grid #contact .inner{grid-template-columns:1fr;gap:3rem}
+}
+
 .s-label{
   font-family:'Unbounded',sans-serif;font-size:.52rem;
   letter-spacing:.55em;text-transform:uppercase;
@@ -162,81 +172,6 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
 .a-val{font-size:.88rem;font-style:italic;letter-spacing:.04em;color:var(--white);word-wrap:break-word;overflow-wrap:break-word}
 .a-val.red{color:var(--red2)}
 
-/* ── dates ── */
-.date-list{display:flex;flex-direction:column}
-.date{
-  display:grid;grid-template-columns:5.5rem 1fr auto;
-  align-items:center;gap:3rem;
-  padding:1.9rem 0;border-bottom:1px solid var(--dim);
-  transition:padding-left .35s ease;position:relative;
-}
-.date::after{content:'';position:absolute;left:0;top:50%;width:0;height:1px;background:var(--red);transform:translateY(-50%);transition:width .35s}
-.date:hover{padding-left:1.6rem}
-.date:hover::after{width:1.3rem}
-
-.date-date{font-family:'Unbounded',sans-serif;font-size:.55rem;color:var(--red2);letter-spacing:.12em;line-height:1.9}
-.date-venue{font-size:1rem;color:var(--white)}
-.date-city{font-family:'Unbounded',sans-serif;font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(237,232,223,.22);margin-top:.3rem}
-.date-status{font-family:'Unbounded',sans-serif;font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(237,232,223,.18)}
-.date-status.on{color:var(--red2)}
-
-/* ── MUSIC & MIXES CONTAINER ── */
-.music-mixes-container{display:block}
-
-/* ── MUSIC ── */
-.music-list{display:flex;flex-direction:column}
-.music{
-  display:grid;grid-template-columns:2.6rem 1fr auto;
-  align-items:center;gap:2.5rem;
-  padding:1.9rem 0;border-bottom:1px solid var(--dim);
-  cursor:pointer;transition:padding-left .35s;position:relative;
-}
-.music::after{content:'';position:absolute;left:0;top:50%;width:0;height:1px;background:var(--red);transform:translateY(-50%);transition:width .35s}
-.music:hover{padding-left:1.6rem}
-.music:hover::after{width:1.3rem}
-.music:hover .play-btn{border-color:var(--red2);color:var(--red2)}
-.music:hover .music-link{color:var(--white)}
-.music-link{
-  text-decoration:none;color:rgba(237,232,223,.32);
-  display:flex;flex-direction:column;transition:color .3s;
-}
-.music-name{font-size:1rem;font-style:italic;color:rgba(237,232,223,.5);transition:color .3s}
-.music-meta{font-family:'Unbounded',sans-serif;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(237,232,223,.15);margin-top:.3rem}
-
-/* ── MIXES ── */
-.mix-list{display:flex;flex-direction:column}
-.mix{
-  display:grid;grid-template-columns:2.6rem 1fr auto;
-  align-items:center;gap:2.5rem;
-  padding:1.9rem 0;border-bottom:1px solid var(--dim);
-  cursor:pointer;transition:padding-left .35s;position:relative;
-  text-decoration:none;color:inherit;
-}
-.mix::after{content:'';position:absolute;left:0;top:50%;width:0;height:1px;background:var(--red);transform:translateY(-50%);transition:width .35s}
-.mix:hover{padding-left:1.6rem}
-.mix:hover::after{width:1.3rem}
-.mix:hover .play-btn{border-color:var(--red2)}
-.mix:hover .play-btn::before{border-left-color:var(--red2)}
-.mix:hover .mix-name{color:var(--white)}
-
-.play-btn{
-  width:2.6rem;height:2.6rem;border-radius:50%;
-  border:1px solid rgba(237,232,223,.1);
-  display:flex;align-items:center;justify-content:center;
-  transition:all .3s;flex-shrink:0;position:relative;
-  font-size:0;
-}
-.play-btn::before{
-  content:'';
-  width:0;height:0;
-  border-left:6px solid rgba(237,232,223,.22);
-  border-top:4px solid transparent;
-  border-bottom:4px solid transparent;
-  transition:border-color .3s;
-}
-.mix-name{font-size:1rem;font-style:italic;color:rgba(237,232,223,.5);transition:color .3s}
-.mix-meta{font-family:'Unbounded',sans-serif;font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(237,232,223,.15);margin-top:.3rem}
-.mix-dur{font-family:'Unbounded',sans-serif;font-size:.55rem;letter-spacing:.12em;color:rgba(237,232,223,.15)}
 
 /* ── CONTACT ── */
 #contact .inner{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:start}
