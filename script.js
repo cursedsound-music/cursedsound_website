@@ -2,21 +2,54 @@
 document.addEventListener('DOMContentLoaded',function(){
   var navToggle=document.querySelector('.nav-toggle');
   var navLinks=document.querySelector('.nav-links');
+  var isMenuOpen=false;
+
+  function setMenuState(open){
+    isMenuOpen=open;
+    navLinks.classList.toggle('open',open);
+    navToggle.setAttribute('aria-expanded',String(open));
+    navToggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');
+  }
+
+  function smoothScrollToHash(hash){
+    var target=document.querySelector(hash);
+    if(!target) return;
+    var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({behavior:reduceMotion?'auto':'smooth'});
+  }
+
   if(navToggle && navLinks){
     navToggle.addEventListener('click',function(){
-      navLinks.classList.toggle('open');
+      setMenuState(!isMenuOpen);
     });
+
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&isMenuOpen){
+        setMenuState(false);
+        navToggle.focus();
+      }
+    });
+
+    document.addEventListener('click',function(e){
+      if(!isMenuOpen) return;
+      if(e.target===navToggle||navToggle.contains(e.target)||navLinks.contains(e.target)) return;
+      setMenuState(false);
+    });
+
+    window.addEventListener('resize',function(){
+      if(window.innerWidth>768&&isMenuOpen){
+        setMenuState(false);
+      }
+    },{passive:true});
+
     // Close menu on link click + smooth scroll
     navLinks.querySelectorAll('a').forEach(function(link){
       link.addEventListener('click',function(e){
-        navLinks.classList.remove('open');
+        setMenuState(false);
         var href=link.getAttribute('href');
         if(href&&href.startsWith('#')){
           e.preventDefault();
-          var target=document.querySelector(href);
-          if(target){
-            target.scrollIntoView({behavior:'smooth'});
-          }
+          smoothScrollToHash(href);
         }
       });
     });
@@ -28,10 +61,7 @@ document.addEventListener('DOMContentLoaded',function(){
       var href=logo.getAttribute('href');
       if(href&&href.startsWith('#')){
         e.preventDefault();
-        var target=document.querySelector(href);
-        if(target){
-          target.scrollIntoView({behavior:'smooth'});
-        }
+        smoothScrollToHash(href);
       }
     });
   }
@@ -41,6 +71,13 @@ document.addEventListener('DOMContentLoaded',function(){
 (function(){
   var container=document.getElementById('hero-3d');
   if(!container) return;
+
+  var prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var saveData=navigator.connection&&navigator.connection.saveData;
+  var lowPowerDevice=navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=2;
+  if(prefersReducedMotion||saveData||lowPowerDevice){
+    return;
+  }
 
   var canvas=document.createElement('canvas');
   canvas.style.display='block';
@@ -311,7 +348,7 @@ document.addEventListener('DOMContentLoaded',function(){
   
   function render(){
     requestAnimationFrame(render);
-    if(!isVisible)return;
+    if(!isVisible||document.hidden)return;
     
     // Smooth mouse interpolation
     mouse.x+=(mouse.targetX-mouse.x)*0.05;

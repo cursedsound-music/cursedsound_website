@@ -17,6 +17,26 @@ body{
   overflow-x:hidden;
 }
 
+html,body{max-width:100%}
+
+img,canvas,svg,video{max-width:100%;height:auto}
+
+#about,#contact{scroll-margin-top:110px}
+
+.skip-link{
+  position:absolute;
+  top:-100px;
+  left:1rem;
+  z-index:500;
+  background:var(--red2);
+  color:var(--white);
+  text-decoration:none;
+  padding:.7rem 1rem;
+  font-size:.6rem;
+  letter-spacing:.1em;
+}
+.skip-link:focus{top:1rem}
+
 /* ── GRAIN ── */
 body::after{
   content:'';position:fixed;inset:0;
@@ -38,7 +58,7 @@ nav{
 .nav-links a{
   font-family:'Unbounded',sans-serif;font-size:.52rem;
   letter-spacing:.28em;text-transform:uppercase;
-  color:rgba(237,232,223,.3);text-decoration:none;transition:color .3s;
+  color:rgba(237,232,223,.62);text-decoration:none;transition:color .3s;
 }
 .nav-links a:hover{color:var(--white)}
 .nav-toggle {
@@ -98,7 +118,7 @@ nav{
   font-size:clamp(2.5rem,6.5vw,6rem);
   font-weight:900;line-height:1;
   letter-spacing:-.02em;color:var(--white);
-  position:relative;display:inline-block;
+  position:relative;display:inline-block;max-width:100%;overflow-wrap:anywhere;word-break:break-word;
 }
 
 /* shatter glitch on letters — rare */
@@ -126,6 +146,30 @@ nav{
   color:rgba(237,232,223,.28);
 }
 
+.hero-cta{
+  display:inline-flex;
+  align-items:center;
+  margin-top:1.8rem;
+  border:1px solid rgba(237,232,223,.32);
+  color:var(--white);
+  text-decoration:none;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  font-size:.55rem;
+  padding:.9rem 1.3rem;
+  transition:border-color .3s,background-color .3s,color .3s;
+}
+.hero-cta:hover{
+  border-color:var(--red2);
+  background:var(--red2);
+}
+
+a:focus-visible,
+button:focus-visible{
+  outline:2px solid var(--red3);
+  outline-offset:3px;
+}
+
 /* ── DIVIDER ── */
 hr{border:none;border-top:1px solid var(--dim);position:relative}
 hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;color:var(--red2);background:var(--black);padding:0 .5rem}
@@ -134,6 +178,7 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
 .section{padding:6.5rem 3rem;border-top:1px solid var(--dim)}
 
 .about-booking-grid{display:grid;grid-template-columns:1fr}
+.about-booking-grid .section,.inner{min-width:0}
 
 @media(min-width:1100px){
   .about-booking-grid{grid-template-columns:1fr 1fr}
@@ -184,9 +229,13 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
   text-decoration:none;color:rgba(237,232,223,.32);
   font-family:'Unbounded',sans-serif;font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;
   transition:color .3s;
+  min-width:0;
+  gap:.8rem;
+  overflow-wrap:anywhere;
+  word-break:break-word;
 }
 .c-link:hover{color:var(--white)}
-.c-link span{opacity:.25;transition:opacity .3s,transform .3s;display:inline-block;color:transparent;font-size:0;position:relative;width:1.2em;height:1.2em}
+.c-link span{opacity:.25;transition:opacity .3s,transform .3s;display:inline-block;color:transparent;font-size:0;position:relative;width:1.2em;height:1.2em;flex-shrink:0}
 .c-link span::after{content:'';position:absolute;top:50%;right:0;width:6px;height:6px;border-top:1px solid rgba(237,232,223,.25);border-right:1px solid rgba(237,232,223,.25);transform:translate(-2px,-50%) rotate(45deg);transition:border-color .3s}
 .c-link:hover span{opacity:1;transform:translate(4px,-4px)}
 .c-link:hover span::after{border-color:var(--white)}
@@ -226,7 +275,14 @@ footer{
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
   nav{padding:1.5rem;background:var(--black)}
-  .logo{font-size:.5rem;letter-spacing:.2em}
+  .logo{
+    font-size:.45rem;
+    letter-spacing:.14em;
+    max-width:calc(100vw - 6.5rem);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
   .nav-toggle{display:block}
   .nav-links{
     position:absolute;
@@ -251,6 +307,9 @@ footer{
   }
   .nav-links a:last-child{border-bottom:none}
   .hero-name{font-size:clamp(2rem,5.5vw,4rem)}
+  .hero-name::before{display:none}
+  .hero-sub{font-size:.74rem;letter-spacing:.1em;line-height:1.6}
+  .hero-cta{font-size:.5rem;letter-spacing:.16em}
   #hero{padding:0 1.5rem 3.5rem}
   .section{padding:4.5rem 1.5rem}
   #about .inner,#contact .inner{grid-template-columns:1fr;gap:3.5rem}
@@ -258,9 +317,20 @@ footer{
   .a-val{max-width:100%}
   .date{grid-template-columns:4.5rem 1fr;gap:1.5rem}
   .date-status{display:none}
+  .c-link{
+    font-size:.48rem;
+    letter-spacing:.08em;
+    align-items:flex-start;
+    line-height:1.5;
+  }
+  .c-link span{margin-top:.2rem}
   .f-row{grid-template-columns:1fr;gap:0}
   footer{flex-direction:column;gap:.8rem;padding:2rem 1.5rem}
   .footer-inner{flex-direction:column;align-items:flex-start;gap:1rem}
   .footer-links{flex-direction:column;gap:0.8rem}
   .thirteen{font-size:60vw}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }

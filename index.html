@@ -3,7 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CURSEDSOUND is a Karlsruhe-based artist for psychedelic and dark electronic music."
+    />
+    <meta name="theme-color" content="#060606" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://www.cursedsound.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CURSEDSOUND" />
+    <meta
+      property="og:description"
+      content="Music Production, Sound Design, DJing."
+    />
+    <meta property="og:url" content="https://www.cursedsound.com/" />
+    <meta property="og:site_name" content="CURSEDSOUND" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="CURSEDSOUND" />
+    <meta
+      name="twitter:description"
+      content="Music Production, Sound Design, DJing."
+    />
+
     <title>CURSEDSOUND</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23060606'/%3E%3Ctext x='50' y='60' text-anchor='middle' font-size='58' fill='%23ede8df'%3EC%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap"
       rel="stylesheet"
@@ -11,13 +38,21 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <a class="skip-link" href="#about">Skip to content</a>
+
     <!-- NAV -->
     <nav>
       <a href="#hero" class="logo">CURSEDSOUND</a>
-      <button class="nav-toggle" aria-label="Open navigation">
+      <button
+        class="nav-toggle"
+        aria-label="Open navigation"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+      >
         <span class="hamburger"></span>
       </button>
-      <ul class="nav-links">
+      <ul class="nav-links" id="primary-navigation">
+        <li><a href="#hero">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Booking</a></li>
       </ul>
@@ -31,6 +66,7 @@
         <p class="hero-sub">
           Music Production &mdash; Sound Design &mdash; DJing
         </p>
+        <a class="hero-cta" href="#contact">Book now</a>
       </div>
     </section>
 
@@ -46,18 +82,19 @@
               CURSEDSOUND sits somewhere in the shadows between techno and house,
               pushing psychedelic textures and melodies through driving grooves.
             </p>
-          <div class="about-table">
-            <div class="a-row">
-              <span class="a-key">Based in</span
-              ><span class="a-val">Karlsruhe, DE</span>
-            </div>
-            <div class="a-row">
-              <span class="a-key">Genre</span
-              ><span class="a-val">Psychedelic & Dark Electronic Music</span>
-            </div>
-            <div class="a-row">
-              <span class="a-key">BPM range</span
-              ><span class="a-val">128 — 145</span>
+            <div class="about-table">
+              <div class="a-row">
+                <span class="a-key">Based in</span
+                ><span class="a-val">Karlsruhe, DE</span>
+              </div>
+              <div class="a-row">
+                <span class="a-key">Genre</span
+                ><span class="a-val">Psychedelic & Dark Electronic Music</span>
+              </div>
+              <div class="a-row">
+                <span class="a-key">BPM range</span
+                ><span class="a-val">128 — 145</span>
+              </div>
             </div>
           </div>
         </div>
@@ -76,26 +113,30 @@
               <a class="c-link" href="mailto:booking@cursedsound.com"
                 >booking@cursedsound.com <span>↗</span></a
               >
-              <a class="c-link" href="https://www.instagram.com/cursedsound"
+              <a class="c-link" href="https://www.instagram.com/cursedsound" target="_blank" rel="noopener noreferrer"
                 >Instagram <span>↗</span></a
               >
               <a
                 class="c-link"
                 href="https://open.spotify.com/intl-de/artist/7eCU2d1x8AarSiR1IyA69K?si=osEAOvn2Soixngp8DqYxMw"
+                target="_blank"
+                rel="noopener noreferrer"
                 >Spotify <span>↗</span></a
               >
-              <a class="c-link" href="https://www.beatport.com/de/artist/cursedsound/865231"
+              <a class="c-link" href="https://www.beatport.com/de/artist/cursedsound/865231" target="_blank" rel="noopener noreferrer"
                 >Beatport <span>↗</span></a
               >
-              <a class="c-link" href="https://www.soundcloud.com/cursedsound"
+              <a class="c-link" href="https://www.soundcloud.com/cursedsound" target="_blank" rel="noopener noreferrer"
                 >Soundcloud <span>↗</span></a
               >
-              <a class="c-link" href="https://cursedsound.bandcamp.com"
+              <a class="c-link" href="https://cursedsound.bandcamp.com" target="_blank" rel="noopener noreferrer"
                 >Bandcamp <span>↗</span></a
               >
               <a
                 class="c-link"
                 href="https://www.residentadvisor.net/dj/cursedsound"
+                target="_blank"
+                rel="noopener noreferrer"
                 >Resident Advisor <span>↗</span></a
               >
             </div>
