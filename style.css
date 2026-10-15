@@ -123,22 +123,46 @@ nav{
   font-weight:900;line-height:1;
   letter-spacing:-.02em;color:var(--white);
   position:relative;display:inline-block;max-width:100%;overflow-wrap:anywhere;word-break:break-word;
+  /* lit by the orb: red heat on the top right, slight falloff towards the bottom */
+  background:
+    radial-gradient(ellipse 38% 140% at 100% -30%,rgba(196,0,0,.95),rgba(196,0,0,0) 70%),
+    linear-gradient(180deg,#f3eee5 35%,#b4aca2 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  /* --kick is set by the orb on every beat (128 BPM) */
+  filter:drop-shadow(0 0 calc(4px + var(--kick,0) * 18px) rgba(196,0,0,calc(.15 + var(--kick,0) * .45)));
 }
 
-/* shatter glitch on letters — rare */
-.hero-name::before{
+/* shatter glitch on letters: two red slices tearing sideways */
+.hero-name::before,
+.hero-name::after{
   content:'CURSEDSOUND';
   position:absolute;top:0;left:0;
-  color:var(--red2);
-  clip-path:polygon(0 40%,100% 40%,100% 55%,0 55%);
-  animation:shatter 9s step-end infinite;
-  transform:translateX(0);
+  -webkit-text-fill-color:var(--red3);
+  background:var(--black);       /* hides the letters underneath, so the slice tears */
+  opacity:0;pointer-events:none;
+}
+.hero-name::before{
+  clip-path:polygon(0 14%,100% 14%,100% 38%,0 38%);
+  animation:shatter 7s step-end infinite;
+}
+.hero-name::after{
+  clip-path:polygon(0 62%,100% 62%,100% 76%,0 76%);
+  -webkit-text-fill-color:var(--white);
+  animation:shatter2 7s step-end infinite;
 }
 @keyframes shatter{
-  0%,88%,100%{opacity:0;transform:translateX(0)}
-  89%{opacity:.9;transform:translateX(-5px) skewX(-3deg)}
-  91%{opacity:.7;transform:translateX(4px)}
-  93%{opacity:0}
+  0%,86%,100%{opacity:0;transform:none}
+  87%{opacity:.95;transform:translateX(-9px) skewX(-6deg)}
+  88.5%{opacity:.8;transform:translateX(6px)}
+  90%{opacity:.9;transform:translateX(-3px)}
+  91%{opacity:0}
+}
+@keyframes shatter2{
+  0%,87%,100%{opacity:0;transform:none}
+  88%{opacity:1;transform:translateX(12px)}
+  89.5%{opacity:.8;transform:translateX(-5px)}
+  90.5%{opacity:0}
 }
 
 .hero-sub{
@@ -147,8 +171,10 @@ nav{
   font-style:normal;
   font-size:.85rem;
   letter-spacing:.18em;
-  color:rgba(237,232,223,.28);
+  color:rgba(237,232,223,.5);
 }
+.hero-sub span{white-space:nowrap}
+.hero-sub .sep{color:var(--red3);font-size:.6em;vertical-align:.2em;margin:0 .5em 0 .1em}
 
 .hero-cta{
   display:inline-flex;
@@ -322,8 +348,8 @@ footer{
   }
   .nav-links a:last-child{border-bottom:none}
   .hero-name{font-size:clamp(2rem,5.5vw,4rem)}
-  .hero-name::before{display:none}
-  .hero-sub{font-size:.74rem;letter-spacing:.1em;line-height:1.6}
+  .hero-name::before,.hero-name::after{display:none}
+  .hero-sub{font-size:.7rem;letter-spacing:.06em;line-height:1.6}
   .hero-cta{font-size:.5rem;letter-spacing:.16em}
   #hero{padding:0 1.5rem 3.5rem}
   .section{padding:4.5rem 1.5rem}

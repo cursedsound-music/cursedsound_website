@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded',function(){
   if(!gl){console.warn('WebGL not supported');return;}
 
   var mouse={x:0.5,y:0.5,targetX:0.5,targetY:0.5};
+  var heroName=document.querySelector('.hero-name');
 
   /* Shaders */
   var vertSrc=`
@@ -427,6 +428,8 @@ document.addEventListener('DOMContentLoaded',function(){
     gl.uniform2f(uCenter,layout.cx,layout.cy);
     gl.uniform1f(uScale,layout.scale);
     gl.uniform1f(uTime,t);
+    // same beat pulse as the shader, so the title glows with the orb
+    if(heroName)heroName.style.setProperty('--kick',Math.pow(1-(t*128/60)%1,8).toFixed(3));
     gl.uniform2f(uMouse,mouse.x,mouse.y);
     gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
   }
