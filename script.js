@@ -174,6 +174,14 @@ document.addEventListener('DOMContentLoaded',function(){
                      mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);
     }
 
+    // fake studio environment for the glossy reflections: two soft light strips + red floor bounce
+    vec3 env(vec3 r){
+      float strip=smoothstep(0.86,0.97,r.y)+0.6*smoothstep(0.93,0.99,dot(r,normalize(vec3(-0.8,0.25,0.5))));
+      vec3 c=vec3(1.0,0.92,0.9)*strip;
+      c+=vec3(0.5,0.02,0.01)*smoothstep(0.0,-0.8,r.y);
+      return c;
+    }
+
     float tt,morph,kick;
     vec3 np;          // folded space of the last map() call
     float holeD;      // distance to the carved holes (for the molten rims)
@@ -182,23 +190,22 @@ document.addEventListener('DOMContentLoaded',function(){
     float map(vec3 p){
       // obsidian shell, carved by a kaleidoscopic fold
       float shell=length(p)-R-0.03*kick;
-      np=p;
+      np=p+0.06*sin(p.yzx*2.0+tt*0.7);
       vec3 off=mix(vec3(0.40,0.30,0.20),vec3(0.25,0.45,0.35),morph);
       for(int i=0;i<5;i++){
         np=abs(np)-off;
         np.xy*=rot(0.39*float(i)+tt*0.06);
         np.yz*=rot(0.52*float(i)-tt*0.045);
-        np-=0.08*sin(p.y*2.0+tt*0.7);
       }
       holeD=(length(np)-0.34)*0.6;
       float d=max(shell,-holeD);
-      d=max(d,-(length(p)-R+0.22));             // hollow it out: a thin shell
+      d=max(d,-(length(p)-R+0.3));              // hollow it out: a thin shell
       d+=noise(p*2.6+tt*0.12)*0.05;
 
       // molten heart, visible through the holes
       float core=length(p)-0.62-0.05*kick-0.04*noise(p*4.0+tt*0.6);
       mat=core<d?1.0:0.0;
-      return min(d,core)*0.8;
+      return min(d,core)*0.7;
     }
 
     // tetrahedral normal: 4 map() calls instead of 6
@@ -238,13 +245,15 @@ document.addEventListener('DOMContentLoaded',function(){
         float t=tc-sqrt(max((R+0.2)*(R+0.2)-b*b,0.0));
         float hit=0.0;
         float glow=0.0;
-        for(int i=0;i<72;i++){
-          float d=map(ro+rd*t);
+        float d=1.0;
+        for(int i=0;i<96;i++){
+          d=map(ro+rd*t);
           if(mat>0.5)glow+=0.006/(1.0+d*d*80.0);   // light leaking from the core
-          if(d<0.001){hit=1.0;break;}
+          if(d<0.0008*t){hit=1.0;break;}
           t+=d;
           if(t>tc+R+0.3)break;
         }
+        if(hit<0.5&&d<0.02&&t<tc+R+0.3)hit=1.0;      // ran out of steps right at a surface
         col+=vec3(0.9,0.05,0.02)*glow*(0.8+0.6*kick);
 
         if(hit>0.5){
@@ -259,18 +268,21 @@ document.addEventListener('DOMContentLoaded',function(){
           if(m>0.5){
             // molten core: hot centre, darker crust
             float n=noise(pos*5.0+tt*0.8);
-            col=mix(vec3(0.45,0.01,0.005),vec3(1.0,0.22,0.06),n*n*n)*(0.9+0.9*kick);
+            col=mix(vec3(0.5,0.015,0.005),vec3(1.4,0.32,0.08),n*n)*(1.0+1.0*kick);
           }else{
             float dif=max(dot(nor,ld),0.0);
-            float spec=pow(max(dot(nor,hal),0.0),90.0);
-            float back=max(dot(nor,-ld),0.0);
-            col=vec3(0.025,0.006,0.006)*(0.25+dif);       // obsidian
-            col+=vec3(1.0,0.85,0.8)*spec*0.7;              // sharp gloss
-            col+=vec3(0.6,0.02,0.01)*back*0.06;            // red bounce from below
-            col+=vec3(0.7,0.02,0.01)*fres*0.35;            // red rim light
-            // molten seam only where a hole meets the outer surface
-            float seam=exp(-abs(rim)*45.0)*exp(-abs(length(pos)-R)*25.0);
-            col+=vec3(1.0,0.12,0.03)*seam*(0.7+1.2*kick);
+            float spec=pow(max(dot(nor,hal),0.0),120.0);
+            float rl=length(pos);
+            col=vec3(0.012,0.004,0.004)*(0.3+dif);        // obsidian
+            col+=env(reflect(rd,nor))*(0.04+0.9*fres);     // glassy reflections
+            col+=vec3(1.0,0.9,0.85)*spec*0.8;              // sharp gloss
+            // inner walls lit by the core: faces turned towards the centre glow red
+            float facing=max(dot(nor,-pos/rl),0.0);
+            float depth=smoothstep(R,R-0.35,rl);
+            col+=vec3(0.9,0.05,0.015)*facing*facing*depth*(0.35+0.9*kick);
+            // molten seam where a hole meets the outer surface
+            float seam=exp(-abs(rim)*160.0)*exp(-abs(rl-R)*40.0);
+            col+=vec3(1.0,0.15,0.04)*seam*(0.8+1.4*kick);
           }
         }
       }
@@ -341,11 +353,11 @@ document.addEventListener('DOMContentLoaded',function(){
     // Wide screens: beside the title on the right. Narrow/portrait: above the title.
     var radius,cx,cy;
     if(w/h>1.15&&w>760){
-      radius=Math.min(h*0.29,w*0.20);
-      cx=w*0.71;cy=h*0.60;
+      radius=Math.min(h*0.25,w*0.17);
+      cx=w*0.71;cy=h*0.62;
     }else{
-      radius=Math.min(w*0.40,h*0.24);
-      cx=w*0.5;cy=h*0.64;
+      radius=Math.min(w*0.33,h*0.2);
+      cx=w*0.5;cy=h*0.66;
     }
     // the shell projects to ~0.69 view units at this camera distance
     layout.cx=cx*quality;layout.cy=cy*quality;layout.scale=radius/0.69*quality;
