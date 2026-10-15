@@ -21,7 +21,7 @@ html,body{max-width:100%}
 
 img,canvas,svg,video{max-width:100%;height:auto}
 
-#about,#contact{scroll-margin-top:110px}
+#about,#contact,#request{scroll-margin-top:110px}
 
 .skip-link{
   position:absolute;
@@ -197,7 +197,7 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
 .s-label::before{content:'';display:block;width:20px;height:1px;background:var(--red);flex-shrink:0}
 
 /* ── ABOUT ── */
-#about .inner{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:start}
+#about .inner{display:grid;grid-template-columns:1fr;gap:7rem;align-items:start}
 
 .bio{font-size:1rem;line-height:2.1;color:rgba(237,232,223,.55);font-style:italic}
 .bio strong{font-style:normal;font-weight:400;color:var(--white)}
@@ -219,7 +219,7 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
 
 
 /* ── CONTACT ── */
-#contact .inner{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:start}
+#contact .inner{display:grid;grid-template-columns:1fr;gap:7rem;align-items:start}
 .contact-blurb{font-size:1rem;line-height:2.1;font-style:italic;color:rgba(237,232,223,.45);margin-bottom:2.5rem}
 .contact-blurb strong{font-weight:400;font-style:normal;color:var(--white)}
 .c-links{border-top:1px solid var(--dim)}
@@ -241,11 +241,12 @@ hr::before{content:'✦';position:absolute;left:3rem;top:-.6rem;font-size:.6rem;
 .c-link:hover span::after{border-color:var(--white)}
 
 /* FORM */
-.bform{display:flex;flex-direction:column}
+#request .inner{display:grid;grid-template-columns:1fr 2fr;gap:7rem;align-items:start}
+.bform{display:flex;flex-direction:column;min-width:0}
 .f{
   background:transparent;border:none;border-bottom:1px solid var(--dim);
-  color:var(--white);font-family:'Unbounded',sans-serif;font-style:normal;
-  font-size:.88rem;letter-spacing:.04em;
+  color:rgba(237,232,223,.85);font-family:'Unbounded',sans-serif;font-style:normal;
+  font-size:.72rem;letter-spacing:.08em;
   padding:1.3rem 0;outline:none;transition:border-color .3s;width:100%;
 }
 .f::placeholder{color:rgba(237,232,223,.16)}
@@ -322,7 +323,7 @@ footer{
   .hero-cta{font-size:.5rem;letter-spacing:.16em}
   #hero{padding:0 1.5rem 3.5rem}
   .section{padding:4.5rem 1.5rem}
-  #about .inner,#contact .inner{grid-template-columns:1fr;gap:3.5rem}
+  #about .inner,#contact .inner,#request .inner{grid-template-columns:1fr;gap:3.5rem}
   .a-row{flex-direction:column;align-items:flex-start;gap:0.8rem}
   .a-val{max-width:100%}
   .date{grid-template-columns:4.5rem 1fr;gap:1.5rem}

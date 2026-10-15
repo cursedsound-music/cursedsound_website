@@ -110,6 +110,7 @@
               For bookings, collaborations, and label enquiries — response within 48 hours.
             </p>
             <div class="c-links">
+              <a class="c-link" href="#request">Booking request form <span>↓</span></a>
               <a class="c-link" href="mailto:booking@cursedsound.com"
                 >booking@cursedsound.com <span>↗</span></a
               >
@@ -141,41 +142,52 @@
               >
             </div>
           </div>
-          <!-- Booking form: posts to the CRM, which files it as a gig inquiry -->
-          <form class="bform" id="booking-form" method="post"
-                action="https://crm.cursedsound.com/api/public/inquiry">
-            <div class="f-row">
-              <input class="f" type="text" name="name" placeholder="Name *" aria-label="Name" autocomplete="name" maxlength="200" required>
-              <input class="f" type="email" name="email" placeholder="Email *" aria-label="Email" autocomplete="email" maxlength="200" required>
-            </div>
-            <div class="f-row">
-              <input class="f" type="text" name="organization" placeholder="Promoter / Club" aria-label="Promoter or club" autocomplete="organization" maxlength="200">
-              <input class="f" type="text" name="event" placeholder="Event" aria-label="Event name" maxlength="200">
-            </div>
-            <div class="f-row">
-              <input class="f" type="date" name="date" aria-label="Event date">
-              <input class="f" type="text" name="city" placeholder="City" aria-label="City" maxlength="120">
-            </div>
-            <div class="f-row">
-              <input class="f" type="text" name="country" placeholder="Country" aria-label="Country" autocomplete="country-name" maxlength="120">
-              <input class="f" type="text" name="budget" placeholder="Budget" aria-label="Budget" maxlength="120">
-            </div>
-            <textarea class="f" name="message" rows="4" placeholder="Message" aria-label="Message" maxlength="5000"></textarea>
-            <!-- honeypot: hidden from people, bots fill it and get silently dropped -->
-            <div class="hp" aria-hidden="true">
-              <label>Company website <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
-            </div>
-            <!-- no-JS fallback: the CRM redirects back here after a plain form post -->
-            <input type="hidden" name="redirect" value="https://www.cursedsound.com/?sent=1#contact">
-            <p class="f-note">
-              Your details are only used to handle your request — see the <a href="privacy_policy.html">privacy policy</a>.
-            </p>
-            <button class="submit" type="submit">Send</button>
-            <p class="f-status" role="status" aria-live="polite"></p>
-          </form>
         </div>
       </section>
     </div>
+
+    <!-- BOOKING REQUEST -->
+    <section class="section" id="request">
+      <p class="s-label">Booking request</p>
+      <div class="inner">
+        <p class="contact-blurb">
+          <strong>Send a request.</strong><br />
+          Date, city and budget help us get back to you faster.
+        </p>
+        <!-- Booking form: posts to the CRM, which files it as a gig inquiry -->
+        <form class="bform" id="booking-form" method="post"
+              action="https://crm.cursedsound.com/api/public/inquiry">
+          <div class="f-row">
+            <input class="f" type="text" name="name" placeholder="Name *" aria-label="Name" autocomplete="name" maxlength="200" required>
+            <input class="f" type="email" name="email" placeholder="Email *" aria-label="Email" autocomplete="email" maxlength="200" required>
+          </div>
+          <div class="f-row">
+            <input class="f" type="text" name="organization" placeholder="Promoter / Club" aria-label="Promoter or club" autocomplete="organization" maxlength="200">
+            <input class="f" type="text" name="event" placeholder="Event" aria-label="Event name" maxlength="200">
+          </div>
+          <div class="f-row">
+            <input class="f" type="date" name="date" aria-label="Event date">
+            <input class="f" type="text" name="city" placeholder="City" aria-label="City" maxlength="120">
+          </div>
+          <div class="f-row">
+            <input class="f" type="text" name="country" placeholder="Country" aria-label="Country" autocomplete="country-name" maxlength="120">
+            <input class="f" type="text" name="budget" placeholder="Budget" aria-label="Budget" maxlength="120">
+          </div>
+          <textarea class="f" name="message" rows="4" placeholder="Message" aria-label="Message" maxlength="5000"></textarea>
+          <!-- honeypot: hidden from people, bots fill it and get silently dropped -->
+          <div class="hp" aria-hidden="true">
+            <label>Company website <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
+          </div>
+          <!-- no-JS fallback: the CRM redirects back here after a plain form post -->
+          <input type="hidden" name="redirect" value="https://www.cursedsound.com/?sent=1#request">
+          <p class="f-note">
+            Your details are only used to handle your request — see the <a href="privacy_policy.html">privacy policy</a>.
+          </p>
+          <button class="submit" type="submit">Send</button>
+          <p class="f-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
 
     <footer>
       <div class="footer-inner">
