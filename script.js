@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded',function(){
     vec3 env(vec3 r){
       float strip=smoothstep(0.86,0.97,r.y)+0.6*smoothstep(0.93,0.99,dot(r,normalize(vec3(-0.8,0.25,0.5))));
       vec3 c=vec3(1.0,0.92,0.9)*strip;
-      c+=vec3(0.5,0.02,0.01)*smoothstep(0.0,-0.8,r.y);
+      c+=vec3(0.35,0.0,0.004)*smoothstep(0.0,-0.8,r.y);
       return c;
     }
 
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded',function(){
       vec3 col=vec3(0.0);
       // red halo around the orb
       float halo=exp(-max(b-R,0.0)*4.5);
-      col+=vec3(0.55,0.02,0.01)*halo*(0.05+0.05*kick);
+      col+=vec3(0.4,0.0,0.003)*halo*(0.03+0.04*kick);
 
       if(b<R+0.2){                                   // only march pixels that can hit
         float t=tc-sqrt(max((R+0.2)*(R+0.2)-b*b,0.0));
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded',function(){
           if(t>tc+R+0.3)break;
         }
         if(hit<0.5&&d<0.02&&t<tc+R+0.3)hit=1.0;      // ran out of steps right at a surface
-        col+=vec3(0.9,0.05,0.02)*glow*(0.8+0.6*kick);
+        col+=vec3(0.7,0.0,0.006)*glow*(0.8+0.6*kick);
 
         if(hit>0.5){
           vec3 pos=ro+rd*t;
@@ -268,21 +268,21 @@ document.addEventListener('DOMContentLoaded',function(){
           if(m>0.5){
             // molten core: hot centre, darker crust
             float n=noise(pos*5.0+tt*0.8);
-            col=mix(vec3(0.5,0.015,0.005),vec3(1.4,0.32,0.08),n*n)*(1.0+1.0*kick);
+            col=mix(vec3(0.22,0.0,0.002),vec3(1.1,0.012,0.02),n*n)*(0.8+0.8*kick);
           }else{
             float dif=max(dot(nor,ld),0.0);
             float spec=pow(max(dot(nor,hal),0.0),120.0);
             float rl=length(pos);
-            col=vec3(0.012,0.004,0.004)*(0.3+dif);        // obsidian
+            col=vec3(0.008,0.006,0.006)*(0.3+dif);        // obsidian
             col+=env(reflect(rd,nor))*(0.04+0.9*fres);     // glassy reflections
             col+=vec3(1.0,0.9,0.85)*spec*0.8;              // sharp gloss
             // inner walls lit by the core: faces turned towards the centre glow red
             float facing=max(dot(nor,-pos/rl),0.0);
             float depth=smoothstep(R,R-0.35,rl);
-            col+=vec3(0.9,0.05,0.015)*facing*facing*depth*(0.35+0.9*kick);
+            col+=vec3(0.6,0.0,0.005)*facing*facing*depth*(0.35+0.9*kick);
             // molten seam where a hole meets the outer surface
             float seam=exp(-abs(rim)*160.0)*exp(-abs(rl-R)*40.0);
-            col+=vec3(1.0,0.15,0.04)*seam*(0.8+1.4*kick);
+            col+=vec3(1.0,0.02,0.02)*seam*(0.8+1.4*kick);
           }
         }
       }
