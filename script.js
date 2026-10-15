@@ -67,6 +67,61 @@ document.addEventListener('DOMContentLoaded',function(){
   }
 });
 
+// ── BOOKING FORM ──
+document.addEventListener('DOMContentLoaded',function(){
+  var form=document.getElementById('booking-form');
+  if(!form) return;
+  var status=form.querySelector('.f-status');
+  var button=form.querySelector('.submit');
+  var FALLBACK='Please email booking@cursedsound.com instead.';
+
+  // date inputs have no placeholder: dim the empty dd.mm.yyyy like the other fields
+  var dateInput=form.querySelector('input[type=date]');
+  function syncDate(){ dateInput.classList.toggle('is-empty',!dateInput.value); }
+  dateInput.addEventListener('input',syncDate);
+  form.addEventListener('reset',function(){ setTimeout(syncDate,0); });
+  syncDate();
+
+  function setStatus(msg,ok){
+    status.textContent=msg;
+    status.className='f-status '+(ok?'ok':'bad');
+  }
+
+  // back from a no-JS form post
+  if(/[?&]sent=1/.test(window.location.search)){
+    setStatus('Thanks — your request was sent. You will hear back within 48 hours.',true);
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!form.reportValidity()) return;
+    var data={};
+    new FormData(form).forEach(function(v,k){ if(k!=='redirect') data[k]=String(v).trim(); });
+    button.disabled=true;
+    setStatus('Sending…',true);
+    fetch(form.action,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    }).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(body){
+        if(r.ok&&body.ok){
+          form.reset();
+          setStatus('Thanks — your request was sent. You will hear back within 48 hours.',true);
+        }else if(r.status===429){
+          setStatus('Too many requests from your connection. '+FALLBACK,false);
+        }else{
+          setStatus((body.error?'Could not send: '+body.error+'. ':'Could not send. ')+FALLBACK,false);
+        }
+      });
+    }).catch(function(){
+      setStatus('Could not reach the server. '+FALLBACK,false);
+    }).then(function(){
+      button.disabled=false;
+    });
+  });
+});
+
 /* ── INTERACTIVE FRACTAL SPHERE ── */
 (function(){
   var container=document.getElementById('hero-3d');
