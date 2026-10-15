@@ -133,6 +133,16 @@ nav{
   filter:drop-shadow(0 0 calc(4px + var(--kick,0) * 18px) rgba(196,0,0,calc(.15 + var(--kick,0) * .45)));
 }
 
+/* orb centred above the title (same rule as the orb layout in script.js): light from straight above */
+@media (max-width:760px),(max-aspect-ratio:23/20){
+  .hero-name{
+    background:
+      radial-gradient(ellipse 80% 100% at 50% -25%,rgba(196,0,0,.95),rgba(196,0,0,0) 72%),
+      linear-gradient(180deg,#f3eee5 35%,#b4aca2 100%);
+    -webkit-background-clip:text;background-clip:text;
+  }
+}
+
 /* shatter glitch on letters: two red slices tearing sideways */
 .hero-name::before,
 .hero-name::after{
