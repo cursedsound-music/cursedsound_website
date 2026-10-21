@@ -306,6 +306,7 @@ textarea.f{resize:none}
 .f[type=date].is-empty{color:rgba(237,232,223,.16)}
 .f[type=date]::-webkit-calendar-picker-indicator{opacity:.25;cursor:pointer}
 .hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.cf-turnstile{margin-top:1.2rem;min-height:65px}
 .f-note{margin-top:1.6rem;font-size:.6rem;line-height:1.9;letter-spacing:.04em;color:rgba(237,232,223,.25)}
 .f-note a{color:rgba(237,232,223,.45);text-decoration:underline}
 .f-status{margin-top:1.4rem;font-size:.7rem;line-height:1.9;letter-spacing:.04em;min-height:1.3rem}

@@ -87,6 +87,23 @@ document.addEventListener('DOMContentLoaded',function(){
     status.className='f-status '+(ok?'ok':'bad');
   }
 
+  // spam check: load Cloudflare Turnstile only once someone starts using the form
+  var captchaLoaded=false, captchaId=null;
+  window.onTurnstileLoad=function(){
+    var box=form.querySelector('.cf-turnstile');
+    captchaId=turnstile.render(box,{sitekey:box.dataset.sitekey,theme:'dark',size:'flexible'});
+  };
+  function loadCaptcha(){
+    if(captchaLoaded) return;
+    captchaLoaded=true;
+    var s=document.createElement('script');
+    s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad';
+    s.async=true;
+    document.head.appendChild(s);
+  }
+  form.addEventListener('focusin',loadCaptcha);
+  form.addEventListener('pointerdown',loadCaptcha);
+
   // back from a no-JS form post
   if(/[?&]sent=1/.test(window.location.search)){
     setStatus('Thanks — your request was sent. You will hear back within 48 hours.',true);
@@ -97,6 +114,11 @@ document.addEventListener('DOMContentLoaded',function(){
     if(!form.reportValidity()) return;
     var data={};
     new FormData(form).forEach(function(v,k){ if(k!=='redirect') data[k]=String(v).trim(); });
+    if(!data['cf-turnstile-response']){
+      loadCaptcha();
+      setStatus('Please wait a moment for the spam check below, then press Send again.',false);
+      return;
+    }
     button.disabled=true;
     setStatus('Sending…',true);
     fetch(form.action,{
@@ -118,6 +140,7 @@ document.addEventListener('DOMContentLoaded',function(){
       setStatus('Could not reach the server. '+FALLBACK,false);
     }).then(function(){
       button.disabled=false;
+      if(captchaId!==null) turnstile.reset(captchaId);  // tokens are single-use
     });
   });
 });
