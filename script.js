@@ -76,9 +76,11 @@ document.addEventListener('DOMContentLoaded',function(){
   var FALLBACK='Please email booking@cursedsound.com instead.';
 
   // date inputs have no placeholder: dim the empty dd.mm.yyyy like the other fields
+  // (and show the "Date" stand-in on touch browsers, which render it blank)
   var dateInput=form.querySelector('input[type=date]');
   function syncDate(){ dateInput.classList.toggle('is-empty',!dateInput.value); }
   dateInput.addEventListener('input',syncDate);
+  dateInput.addEventListener('change',syncDate);
   form.addEventListener('reset',function(){ setTimeout(syncDate,0); });
   syncDate();
 
