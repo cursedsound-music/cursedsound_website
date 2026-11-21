@@ -17,6 +17,8 @@ https://www.cursedsound.com/
 - `index.html`: Main landing page (hero, about, contact, booking form)
 - `style.css`: Site styling and responsive layout
 - `script.js`: Navigation behavior, smooth scrolling, WebGL hero logic
+- `devices.html`: Max for Live devices (Low End Buddy), linked from the footer
+- `devices/`: device downloads (`.amxd`) and screenshots
 - `legal_notice.html`: Legal notice
 - `privacy_policy.html`: Privacy policy
 - `CNAME`: GitHub Pages custom domain mapping

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Max for Live devices by CURSEDSOUND. Low End Buddy compares the low end of two tracks in Ableton Live 12 and shows phase problems and frequency clashes between 20 and 250 Hz. Free download." />
+    <meta name="theme-color" content="#060606" />
+    <link rel="canonical" href="https://www.cursedsound.com/devices.html" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CURSEDSOUND" />
+    <meta property="og:title" content="Low End Buddy — Max for Live device by CURSEDSOUND" />
+    <meta property="og:description" content="Compares the low end of two tracks and shows phase problems and frequency clashes, 20 to 250 Hz. Free download for Ableton Live 12." />
+    <meta property="og:url" content="https://www.cursedsound.com/devices.html" />
+    <meta property="og:image" content="https://www.cursedsound.com/devices/low-end-buddy.png" />
+    <meta property="og:image:alt" content="Low End Buddy running in Ableton Live" />
+
+    <title>Devices — Low End Buddy | CURSEDSOUND</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="fonts/unbounded-latin-900.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a href="index.html" class="logo">CURSEDSOUND</a>
+      <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-links" id="primary-navigation">
+        <li><a href="index.html#hero">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#request">Booking</a></li>
+      </ul>
+    </nav>
+
+    <main class="section devices-page">
+      <p class="s-label">Devices</p>
+
+      <article class="device" id="low-end-buddy">
+        <div class="device-text">
+          <h1 class="device-name">Low End Buddy</h1>
+          <p class="contact-blurb">
+            <strong>Max for Live audio effect.</strong><br />
+            Compares the low end of two tracks, for example bass and kick,
+            and shows where they clash or cancel between 20 and 250 Hz.
+          </p>
+          <div class="about-table">
+            <div class="a-row"><span class="a-key">Checks</span><span class="a-val">Phase, frequency clash, mono</span></div>
+            <div class="a-row"><span class="a-key">Range</span><span class="a-val">20 — 250 Hz, 12 bands</span></div>
+            <div class="a-row"><span class="a-key">Requires</span><span class="a-val">Ableton Live 12 with Max for Live</span></div>
+            <div class="a-row"><span class="a-key">Version</span><span class="a-val">0.9</span></div>
+            <div class="a-row"><span class="a-key">Price</span><span class="a-val">Free</span></div>
+          </div>
+          <a class="hero-cta device-cta" href="devices/Low-End-Buddy.amxd" download="Low End Buddy.amxd">Download .amxd</a>
+        </div>
+
+        <div class="device-detail">
+          <figure class="device-shot">
+            <picture>
+              <source srcset="devices/low-end-buddy.webp" type="image/webp" />
+              <img src="devices/low-end-buddy.png" width="1204" height="372"
+                   alt="Low End Buddy in Ableton Live: sidechain set to Kick, the 40 Hz band highlighted, status reads Out of phase near 40 Hz" />
+            </picture>
+          </figure>
+
+          <div class="device-notes">
+            <div>
+            <h2 class="device-h">Reading the bands</h2>
+            <ul class="legend">
+              <li><span class="key key-bar" aria-hidden="true"></span><b>Height</b> shared energy in that band, crowded above the line</li>
+              <li><span class="key" style="background:#78c86e" aria-hidden="true"></span><b>Green</b> adds up</li>
+              <li><span class="key" style="background:#e8c450" aria-hidden="true"></span><b>Yellow</b> smears</li>
+              <li><span class="key" style="background:#e66946" aria-hidden="true"></span><b>Red</b> cancels</li>
+              <li><span class="key" style="background:#969696" aria-hidden="true"></span><b>Grey</b> one side is quiet</li>
+            </ul>
+            </div>
+            <div>
+            <h2 class="device-h">Setup</h2>
+            <ol class="steps">
+              <li>Put the device on one track, for example the bass.</li>
+              <li>Pick the second track in the Sidechain menus, for example the kick.</li>
+              <li>Read the status line and the band view. Listen: Sum plays both lows together to hear any cancellation.</li>
+            </ol>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="devices.html">DEVICES</a>
+          <a href="legal_notice.html">LEGAL NOTICE</a>
+          <a href="privacy_policy.html">PRIVACY POLICY</a>
+        </div>
+        <span class="f-copy">© 2026 CURSEDSOUND</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
